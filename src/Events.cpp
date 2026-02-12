@@ -1,9 +1,15 @@
 #include "Events.h"
 #include "Settings.h"
 #include "Utils.h"
+#include <chrono>
 
 namespace Events
+
 {
+	std::chrono::steady_clock::time_point g_lastDodgeTime = std::chrono::steady_clock::now();
+
+	constexpr float g_dodgeCooldown = 1.0f;
+
 	enum Direction : std::uint32_t
 	{
 		kNeutral = 0,
@@ -89,8 +95,16 @@ namespace Events
 				continue;
 			}
 
+			auto now = std::chrono::steady_clock::now();
+
 			if (key == Settings::uDodgeKey) {
-				Dodge();
+				float elapsed = std::chrono::duration<float>(now - g_lastDodgeTime).count();
+
+				if (elapsed >= g_dodgeCooldown) {
+					g_lastDodgeTime = now;
+					Dodge();
+				}
+
 				break;
 			}
 		}
@@ -218,9 +232,10 @@ namespace Events
 			}
 		}
 
-		if (Settings::uStaminaConsumption > 0 && didDodge) {
-			playerCharacter->AsActorValueOwner()->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, RE::ActorValue::kStamina, -(float)Settings::uStaminaConsumption);
-		}
+		/*
+			if (Settings::uStaminaConsumption > 0 && didDodge) {
+				playerCharacter->AsActorValueOwner()->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, RE::ActorValue::kStamina, -(float)Settings::uStaminaConsumption);
+			}*/
 	}
 
 	std::uint32_t InputEventHandler::GetGamepadIndex(RE::BSWin32GamepadDevice::Key a_key)

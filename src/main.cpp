@@ -2,7 +2,8 @@
 #include "Hooks.h"
 #include "Papyrus.h"
 #include "Settings.h"
-
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #include "TrueHUDAPI.h"
 
 TRUEHUD_API::IVTrueHUD1* trueHudApi = nullptr;
