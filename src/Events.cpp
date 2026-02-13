@@ -8,7 +8,7 @@ namespace Events
 {
 	std::chrono::steady_clock::time_point g_lastDodgeTime = std::chrono::steady_clock::now();
 
-	constexpr float g_dodgeCooldown = 0.5f;
+	constexpr float g_dodgeCooldown = 0.25f; //Prevent Odd Bugs when spamming the dodge key. 
 
 	enum Direction : std::uint32_t
 	{
@@ -232,10 +232,10 @@ namespace Events
 			}
 		}
 
-		/*
+		/*	//Removes the cost while keeping the requirement
 			if (Settings::uStaminaConsumption > 0 && didDodge) {
 				playerCharacter->AsActorValueOwner()->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, RE::ActorValue::kStamina, -(float)Settings::uStaminaConsumption);
-			}*/
+			}*/ 
 	}
 
 	std::uint32_t InputEventHandler::GetGamepadIndex(RE::BSWin32GamepadDevice::Key a_key)
