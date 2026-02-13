@@ -8,7 +8,7 @@ namespace Events
 {
 	std::chrono::steady_clock::time_point g_lastDodgeTime = std::chrono::steady_clock::now();
 
-	constexpr float g_dodgeCooldown = 1.0f;
+	constexpr float g_dodgeCooldown = 0.5f;
 
 	enum Direction : std::uint32_t
 	{
